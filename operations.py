@@ -16,3 +16,8 @@ async def create_task(session: AsyncSession, task:TaskBase):
     await session.refresh(dbtask)
     return dbtask
 
+async def list_tasks(session: AsyncSession):
+    query =select(TaskBase)
+    results = await session.execute(query)
+    tasks=results.scalars().all()
+    return tasks
