@@ -1,40 +1,7 @@
 # Archivos de configuración personal
-.bashrc
-.bash_history
-.profile
-.zshrc
-.zsh_history
-.Xauthority
-.gitconfig
-.wget-hsts
-.xsession-errors*
-.gnupg/
-.mozilla/
-.cache/
-.config/
-.local/
-.java/
-.oh-my-zsh/
-.pki/
-.dotnet/
-.face*
-.dmrc
-.gtkrc-2.0
-.lesshst
-.vscode/
-.snap/
 
-# Archivos binarios o compilados
-*.pyc
-__pycache__/
-.venv/
-# Archivos de usuario
-*.docx
-*.pdf
-*.pptx
-*.zoom
-*.mp4
 
 # Archivos temporales
 *.save
 .idea/
+.venv/
