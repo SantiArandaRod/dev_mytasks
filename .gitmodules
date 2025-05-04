@@ -1,0 +1,3 @@
+[submodule ".ven/dev_mytasks"]
+	path = .ven/dev_mytasks
+	url = https://github.com/SantiArandaRod/dev_mytasks/
