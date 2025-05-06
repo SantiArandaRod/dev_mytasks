@@ -71,3 +71,9 @@ async def update_task(session: AsyncSession, task_id: int, task_update: Dict[str
     await session.commit()
     await session.refresh(task)
     return task
+
+
+async def get_task(session: AsyncSession, task_id:int):
+    return await session.get(TaskSQL, task_id)
+async def get_user(session: AsyncSession, user_id:int):
+    return await session.get(UserSQL, user_id)
