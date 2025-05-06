@@ -41,6 +41,10 @@ async def list_users_endpoint(session: AsyncSession = Depends(get_session)):
 @app.get("/users/inactivo", response_model=list[UserSQL], tags=["Get Inactive Users"])
 async def list_inactive_users_endpoint(session: AsyncSession = Depends(get_session)):
     return await crud.list_inactive_users(session)
+@app.get("/users/inactivo&premium", response_model=list[UserSQL], tags=["Get Inactive & Premium Users"])
+async def list_inactiveAndPremium_users_endpoint(session: AsyncSession = Depends(get_session)):
+    return await crud.list_InactiveAndPremium(session)
+
 @app.get("/users/{user_id}", response_model=UserSQL) ###Listar UserID###
 async def list_users_byId_endpoint(user_id: int, session: AsyncSession = Depends(get_session)):
     return await get_user(session, user_id)
