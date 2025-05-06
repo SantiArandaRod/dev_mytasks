@@ -1,26 +1,23 @@
-
 import os
 from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
 from sqlmodel import SQLModel
-from sqlmodel.ext.asyncio.session import  AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
-#from .env import *
+
+# Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./database.db")
 DATABASE_URL = (
-    f"postgresql+asyncpg://{os.environ['POSTGRESQL_ADDON_USER']}:"
-    f"{os.environ['POSTGRESQL_ADDON_PASSWORD']}@"
-    f"{os.environ['POSTGRESQL_ADDON_HOST']}:"
-    f"{os.environ['POSTGRESQL_ADDON_PORT']}/"
-    f"{os.environ['POSTGRESQL_ADDON_DB']}"
+    f"postgresql+asyncpg://{os.getenv('POSTGRESQL_ADDON_USER')}:{os.getenv('POSTGRESQL_ADDON_PASSWORD')}"
+    f"@{os.getenv('POSTGRESQL_ADDON_HOST')}:{os.getenv('POSTGRESQL_ADDON_PORT')}/"
+    f"{os.getenv('POSTGRESQL_ADDON_DB')}"
 )
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-async def get_session() -> AsyncSession:
+async def get_db_session() -> AsyncSession:
     async with async_session() as session:
         yield session
 
