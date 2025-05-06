@@ -1,8 +1,7 @@
-from datetime import datetime
 from models import *
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from typing import Optional, List, Dict, Any
+from typing import Dict, Any
 from datetime import datetime
 async def create_task_sql(session: AsyncSession, task:TaskSQL):
     dbtask= TaskSQL.model_validate(task, from_attributes=True)
