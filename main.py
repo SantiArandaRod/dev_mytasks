@@ -1,5 +1,6 @@
 from http.client import HTTPException
 
+import uvicorn
 from fastapi import FastAPI, Depends, Path, Query
 from fastapi.openapi.utils import status_code_ranges
 from sqlalchemy.future import select
@@ -10,8 +11,12 @@ from db_connection import get_session, init_db
 from sqlmodel import Session
 from typing import List, Optional
 import operations as crud
+import os
 
 app = FastAPI()
+port = int(os.environ.get("PORT", 10000))
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 @app.get("/")
 async def root():
