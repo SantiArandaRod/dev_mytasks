@@ -20,20 +20,26 @@ async def root():
 async def startup_event():
     await init_db()
 
-@app.post("/tasks/", response_model=TaskBase)  ###Crear Task###
+@app.post("/tasks/", response_model=TaskSQL)  ###Crear Task###
 async def create_task_endpoint(task: TaskBase, session: AsyncSession = Depends(get_session)):
     return await create_task_sql(session, task)
 
-@app.get("/tasks/", response_model=list[TaskBase]) ###Listar Tasks###
+@app.get("/tasks/", response_model=list[TaskSQL]) ###Listar Tasks###
 async def list_tasks_endpoint(session: AsyncSession = Depends(get_session)):
     return await list_tasks(session)
-@app.post("/users/", response_model=UserBase) ###Crear User###
+@app.get("/tasks/{task_id}", response_model=TaskSQL) ###Listar taskId###
+async def list_tasks_byId_endpoint(task_id: int, session: AsyncSession = Depends(get_session)):
+    return await get_task(session, task_id)
+@app.post("/users/", response_model=UserSQL) ###Crear User###
 async def create_user_endpoint(user: UserBase, session: AsyncSession = Depends(get_session)):
     return await create_user_sql(session, user)
 
-@app.get("/users/", response_model=list[UserBase]) ###Listar User###
+@app.get("/users/", response_model=list[UserSQL]) ###Listar User###
 async def list_users_endpoint(session: AsyncSession = Depends(get_session)):
     return await list_users(session)
+@app.get("/users/{user_id}", response_model=UserSQL) ###Listar UserID###
+async def list_users_byId_endpoint(user_id: int, session: AsyncSession = Depends(get_session)):
+    return await get_user(session, user_id)
 
 @app.patch("/users/{user_id}", response_model=UserSQL, tags=["Update User"])
 async def update_user_endpoint(user_id:int, user_update:UserSQL, session:AsyncSession = Depends(get_session)):
