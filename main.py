@@ -14,9 +14,7 @@ import operations as crud
 import os
 
 app = FastAPI()
-port = int(os.environ.get("PORT", 10000))
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=port)
+
 
 @app.get("/")
 async def root():
