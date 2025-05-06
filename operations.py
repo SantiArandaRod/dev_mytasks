@@ -77,3 +77,47 @@ async def get_task(session: AsyncSession, task_id:int):
     return await session.get(TaskSQL, task_id)
 async def get_user(session: AsyncSession, user_id:int):
     return await session.get(UserSQL, user_id)
+
+
+async def convert_userToPremium(session: AsyncSession, user_id:int, userPremium:Dict[str, Any]):
+    user = await session.get(UserSQL, user_id)
+    if user is None:
+        return None
+
+    for key, value in userPremium.items():
+        if value is not None:
+            setattr(user, key, value)
+
+    session.add(user)
+    await session.commit()
+    await session.refresh(user)
+    return user
+async def convert_user_status(session: AsyncSession, user_id: int, new_status: UserStatus):
+    user = await session.get(UserSQL, user_id)
+    if user is None:
+        return None
+
+    user.status = new_status
+    session.add(user)
+    await session.commit()
+    await session.refresh(user)
+    return user
+
+async def convert_task_status(session: AsyncSession, task_id: int, new_status: TaskStatus):
+    task = await session.get(TaskSQL, task_id)
+    if task is None:
+        return None
+
+    task.status = new_status
+    task.updated_at = datetime.now()
+
+    session.add(task)
+    await session.commit()
+    await session.refresh(task)
+    return task
+
+async def list_inactive_users(session: AsyncSession):
+    query =select(UserSQL).where(UserSQL.status == UserStatus.i)
+    results = await session.execute(query)
+    users=results.scalars().all()
+    return users
