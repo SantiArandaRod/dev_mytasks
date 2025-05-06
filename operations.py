@@ -121,3 +121,8 @@ async def list_inactive_users(session: AsyncSession):
     results = await session.execute(query)
     users=results.scalars().all()
     return users
+async def list_InactiveAndPremium(session: AsyncSession):
+    query =select(UserSQL).where(UserSQL.status == UserStatus.i, UserSQL.premium ==True)
+    results = await session.execute(query)
+    users=results.scalars().all()
+    return users
