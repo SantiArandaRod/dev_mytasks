@@ -20,7 +20,6 @@ async def list_tasks(session: AsyncSession):
 
 async def create_user(session: AsyncSession, user:UserBase):
     dbuser= UserBase.model_validate(user, from_attributes=True)
-    dbuser.created_at = datetime.now()
     session.add(dbuser)
     await session.commit()
     await session.refresh(dbuser)
