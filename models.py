@@ -6,10 +6,10 @@ from datetime import datetime
 from enum import Enum
 
 class TaskStatus(str, Enum):
-    p = "Pendiente"
-    ip = "en ejecucion"
-    f = "completada"
-    c = "cancelada"
+    p = "p"
+    ip = "ip"
+    f = "f"
+    c = "c"
 
 class UserStatus(str, Enum):
     a = "activo"
