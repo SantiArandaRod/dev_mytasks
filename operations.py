@@ -6,7 +6,8 @@ from datetime import datetime
 async def create_task_sql(session: AsyncSession, task:TaskSQL):
     dbtask= TaskSQL.model_validate(task, from_attributes=True)
     dbtask.created_at = datetime.now()
-
+    if isinstance(dbtask.status, Enum):
+        dbtask.status = dbtask.status.value
     session.add(dbtask)
     await session.commit()
     await session.refresh(dbtask)
